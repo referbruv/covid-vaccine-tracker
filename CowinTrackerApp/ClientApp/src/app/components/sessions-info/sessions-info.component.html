@@ -1,0 +1,41 @@
+<div class="modal-header">
+    <h5 class="modal-title">Slot availability in the next 7 days starting from {{showDate(startDate)}}</h5>
+    <button type="button" class="close" aria-label="Close" (click)="m.dismiss('Cross click')">&times;</button>
+</div>
+<div class="modal-body">
+    <div class="row">
+        <ng-container *ngFor="let session of sessions">
+            <div class="col-md-6">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5 class="card-title my-1">{{showDate(session.date)}}</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-borderless">
+                            <tr>
+                                <td>Available Capacity</td>
+                                <td>{{session.available_capacity}}</td>
+                            </tr>
+                            <tr>
+                                <td>Min. Age Limit</td>
+                                <td>{{session.min_age_limit}}</td>
+                            </tr>
+                            <tr>
+                                <td>Slots</td>
+                                <td>
+                                    <ng-container *ngFor="let slot of session.slots">
+                                        <span class="badge bg-info text-light">{{slot}}</span>
+                                    </ng-container>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Available Vaccine</td>
+                                <td>{{(session.vaccine !== null && session.vaccine) ? session.vaccine : 'NA'}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>

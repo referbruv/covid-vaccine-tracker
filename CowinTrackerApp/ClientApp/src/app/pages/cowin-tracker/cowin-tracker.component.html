@@ -1,0 +1,70 @@
+<div class="row">
+    <div class="col-md-3 text-center">
+        <div class="form-group">
+            <select [(ngModel)]="selectedState" (change)="onStateChanged()" class="form-control">
+                <option *ngFor="let state of states" [value]="state.state_id">{{state.state_name}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-3 text-center">
+        <div class="form-group">
+            <select [(ngModel)]="selectedDistrict" (change)="onDistrictChanged()" class="form-control">
+                <option *ngFor="let district of districts" [value]="district.district_id">{{district.district_name}}
+                </option>
+            </select>
+        </div>
+    </div>
+    <div class="col-md-3 text-center">
+        <div class="form-group">
+            <div class="input-group">
+                <input (ngModelChange)="onSelectedDateChanged($event)" class="form-control" placeholder="dd-mm-yyyy"
+                    name="dp" [ngModel]="selectedDate" ngbDatepicker #d="ngbDatepicker">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary calendar" (click)="d.toggle()" type="button"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 text-center">
+        <div class="form-group">
+            <button class="btn btn-primary" (click)="getDataForDistrictAndDate()">Find Centers</button>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <ng-container *ngFor="let center of data">
+        <div class="col-md-4">
+            <div class="card mb-3">
+                <div class="card-header">
+                    <span class="mx-2">CenterId #{{center.center_id}}</span> <span
+                        class="badge badge-success">{{center.fee_type}}</span>
+                </div>
+                <div class="card-body">
+                    <h4 class="card-title">{{center.name}}</h4>
+                    <p class="card-text"><span>{{center.block_name}}</span>, <span>pincode:
+                            {{center.pincode}}</span>
+                    </p>
+                    <p class="card-text">Timings: {{tConvert(center.from)}}-{{tConvert(center.to)}}</p>
+                    <button type="button" (click)="setSessionsContent(center)" class="btn btn-outline-info">View
+                        Slots</button>
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</div>
+
+<!-- The Modal -->
+<ng-template let-modal #myModal>
+    <!-- Modal Header -->
+    <div class=" modal-header">
+        <h4 class="modal-title">Sessions Info</h4>
+        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <!-- Modal body -->
+    <div class="modal-body">
+        <app-sessions-info [startDate]="startDate" [sessions]="sessions"></app-sessions-info>
+    </div>
+</ng-template>
