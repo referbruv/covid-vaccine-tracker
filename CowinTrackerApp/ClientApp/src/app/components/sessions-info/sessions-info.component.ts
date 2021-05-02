@@ -17,7 +17,9 @@ export class SessionsInfoComponent implements OnInit {
   }
 
   showDate(dateString: string) {
-    return (new Date(dateString)).toLocaleDateString();
+    return dateString;
+    // let parts = dateString.split("-");
+    // return (new Date(dateString)).toLocaleDateString();
   }
 
 }
